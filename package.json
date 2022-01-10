@@ -1,14 +1,13 @@
 {
   "name": "elm-theme-spec",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "license": "MPL-2.0",
+  "author": "Georges Boris",
+  "description": "A theme specification for web applications.",
   "scripts": {
     "postinstall": "elm-tooling install",
     "docs": "elm-doc-preview"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "elm-doc-preview": "^5.0.5",
     "elm-tooling": "^1.7.0"
