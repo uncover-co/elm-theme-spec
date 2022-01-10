@@ -1,0 +1,14 @@
+{
+  "name": "elm-theme-spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "elm-tooling install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "elm-tooling": "^1.7.0"
+  }
+}
