@@ -26,7 +26,7 @@ main =
         , TS.providerWithDarkMode
             { light = TS.lightTheme
             , dark = TS.darkTheme
-            , class = Just "is-dark"
+            , strategy = TS.ClassStrategy "is-dark"
             }
             []
             [ p
