@@ -5,6 +5,7 @@ module ThemeSpec exposing
     , sample
     , background, borderRadius, borderRadiusLarge, color, colorContrast, colorDark, colorLight, colorShadow, colorTint, danger, dangerContrast, dangerDark, dangerLight, dangerShadow, dangerTint, focus, fontCode, fontText, fontTitle, highlight, highlightContrast, highlightDark, highlightLight, highlightShadow, highlightTint, success, successContrast, successDark, successLight, successShadow, successTint, warning, warningContrast, warningDark, warningLight, warningShadow, warningTint
     , toString
+    , DarkModeStrategy(..)
     )
 
 {-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS vars. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
@@ -42,8 +43,9 @@ module ThemeSpec exposing
 -}
 
 import Html as H
+import Html.Attributes as HA
 import ThemeSpec.CSSVariables as CSS
-import ThemeSpec.Providers
+import ThemeSpec.Hash
 import ThemeSpec.Sample
 import ThemeSpec.Theme
 
@@ -196,21 +198,120 @@ toString =
     ThemeSpec.Theme.toString
 
 
+
+-- Hash
+
+
+hashString : String -> Int
+hashString =
+    ThemeSpec.Hash.hashString 0
+
+
+
+-- Default
+
+
+type DarkModeStrategy
+    = SystemStrategy
+    | ClassStrategy String
+
+
+globalProvider_ :
+    { light : Theme
+    , dark : Maybe Theme
+    , strategy : DarkModeStrategy
+    }
+    -> H.Html msg
+globalProvider_ props =
+    H.div []
+        [ H.node "style"
+            []
+            [ H.text ("body { " ++ toString props.light ++ " }") ]
+        , case props.dark of
+            Just dark ->
+                case props.strategy of
+                    ClassStrategy darkClass ->
+                        H.node "style"
+                            []
+                            [ H.text ("." ++ darkClass ++ " { " ++ toString dark ++ " }") ]
+
+                    SystemStrategy ->
+                        H.node "style"
+                            []
+                            [ H.text ("@media (prefers-color-scheme: dark) { body { " ++ toString dark ++ " } }") ]
+
+            Nothing ->
+                H.text ""
+        ]
+
+
+provider_ :
+    { light : Theme
+    , dark : Maybe Theme
+    , strategy : DarkModeStrategy
+    }
+    -> List (H.Attribute msg)
+    -> List (H.Html msg)
+    -> H.Html msg
+provider_ props attrs children =
+    let
+        lightString : String
+        lightString =
+            toString props.light
+    in
+    case props.dark of
+        Just dark ->
+            let
+                darkString =
+                    toString dark
+
+                targetClass =
+                    darkString
+                        |> hashString
+                        |> (\hash -> CSS.namespace ++ "-" ++ String.fromInt hash)
+            in
+            case props.strategy of
+                ClassStrategy darkClass ->
+                    H.div
+                        (HA.class targetClass :: attrs)
+                        (H.node
+                            "style"
+                            []
+                            [ H.text ("." ++ targetClass ++ " { " ++ lightString ++ " } ." ++ darkClass ++ " ." ++ targetClass ++ " { " ++ darkString ++ " }") ]
+                            :: children
+                        )
+
+                SystemStrategy ->
+                    H.div
+                        (HA.class targetClass :: attrs)
+                        (H.node
+                            "style"
+                            []
+                            [ H.text ("." ++ targetClass ++ " { " ++ lightString ++ " } @media (prefers-color-scheme: dark) { ." ++ targetClass ++ " { " ++ darkString ++ " } }") ]
+                            :: children
+                        )
+
+        Nothing ->
+            H.div (HA.attribute "style" (toString props.light) :: attrs) children
+
+
 {-| -}
 globalProvider : Theme -> H.Html msg
 globalProvider theme =
-    ThemeSpec.Providers.globalProvider
+    globalProvider_
         { light = theme
         , dark = Nothing
+        , strategy = SystemStrategy
         }
 
 
 {-| -}
-globalProviderWithDarkMode : { light : Theme, dark : Theme, class : Maybe String } -> H.Html msg
+globalProviderWithDarkMode : { light : Theme, dark : Theme, strategy : DarkModeStrategy } -> H.Html msg
 globalProviderWithDarkMode props =
-    ThemeSpec.Providers.globalProvider
+    globalProvider_
         { light = props.light
-        , dark = Just ( props.class, props.dark )
+        , dark = Just props.dark
+        , strategy = props.strategy
         }
 
 
@@ -221,22 +322,24 @@ provider :
     -> List (H.Html msg)
     -> H.Html msg
 provider theme =
-    ThemeSpec.Providers.provider
+    provider_
         { light = theme
         , dark = Nothing
+        , strategy = SystemStrategy
         }
 
 
 {-| -}
 providerWithDarkMode :
-    { light : Theme, dark : Theme, class : Maybe String }
+    { light : Theme, dark : Theme, strategy : DarkModeStrategy }
     -> List (H.Attribute msg)
     -> List (H.Html msg)
     -> H.Html msg
 providerWithDarkMode props =
-    ThemeSpec.Providers.provider
+    provider_
         { light = props.light
-        , dark = Just ( props.class, props.dark )
+        , dark = Just props.dark
+        , strategy = props.strategy
         }
 
 

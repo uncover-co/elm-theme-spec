@@ -23,7 +23,7 @@ main =
                         [ ThemeSpec.globalProviderWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , class = Just "elm-book-dark-mode"
+                            , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
                             }
                         , ThemeSpec.sample
                         ]
@@ -34,41 +34,38 @@ main =
                         [ ThemeSpec.globalProviderWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , class = Nothing
+                            , strategy = ThemeSpec.SystemStrategy
                             }
                         , ThemeSpec.sample
                         ]
                     )
             , chapter "Provider"
                 |> renderComponent
-                    (div []
-                        [ ThemeSpec.provider lightTheme
+                    (ThemeSpec.provider
+                        lightTheme
+                        []
+                        [ ThemeSpec.sample
+                        , ThemeSpec.provider darkTheme
                             []
-                            [ ThemeSpec.sample
-                            , ThemeSpec.provider darkTheme
-                                []
-                                [ ThemeSpec.sample ]
-                            ]
+                            [ ThemeSpec.sample ]
                         ]
                     )
             , chapter "Provider Dark Mode"
                 |> renderComponent
-                    (div []
-                        [ ThemeSpec.providerWithDarkMode
-                            { light = lightTheme
-                            , dark = darkTheme
-                            , class = Just "elm-book-dark-mode"
+                    (ThemeSpec.providerWithDarkMode
+                        { light = lightTheme
+                        , dark = darkTheme
+                        , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
+                        }
+                        []
+                        [ ThemeSpec.sample
+                        , ThemeSpec.providerWithDarkMode
+                            { light = darkTheme
+                            , dark = lightTheme
+                            , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
                             }
                             []
-                            [ ThemeSpec.sample
-                            , ThemeSpec.providerWithDarkMode
-                                { light = darkTheme
-                                , dark = lightTheme
-                                , class = Just "elm-book-dark-mode"
-                                }
-                                []
-                                [ ThemeSpec.sample ]
-                            ]
+                            [ ThemeSpec.sample ]
                         ]
                     )
             , chapter "Provider Dark Mode (System)"
@@ -77,14 +74,14 @@ main =
                         [ ThemeSpec.providerWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , class = Nothing
+                            , strategy = ThemeSpec.SystemStrategy
                             }
                             []
                             [ ThemeSpec.sample
                             , ThemeSpec.providerWithDarkMode
                                 { light = darkTheme
                                 , dark = lightTheme
-                                , class = Nothing
+                                , strategy = ThemeSpec.SystemStrategy
                                 }
                                 []
                                 [ ThemeSpec.sample ]

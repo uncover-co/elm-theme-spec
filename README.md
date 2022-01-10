@@ -24,13 +24,13 @@ main =
             [ text "My color won't change if the user goes to dark mode." ]
         , ...
         , TS.providerWithDarkMode
-            { light = lightTheme
-            , dark = darkTheme
+            { light = TS.lightTheme
+            , dark = TS.darkTheme
             , class = Just "is-dark"
             }
             []
             [ p
-                [ style "background" ]
+                [ style "background" TS.background ]
                 [ text "My color will change based on the user's dark mode!" ]
             ]
         ]
