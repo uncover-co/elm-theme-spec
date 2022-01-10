@@ -1,11 +1,11 @@
 module ThemeSpec exposing
     ( Theme, ThemeColor
     , lightTheme, darkTheme
-    , globalProvider, provider, globalProviderWithDarkMode, providerWithDarkMode
+    , globalProvider, provider
+    , globalProviderWithDarkMode, providerWithDarkMode, DarkModeStrategy(..)
     , sample
     , background, borderRadius, borderRadiusLarge, color, colorContrast, colorDark, colorLight, colorShadow, colorTint, danger, dangerContrast, dangerDark, dangerLight, dangerShadow, dangerTint, focus, fontCode, fontText, fontTitle, highlight, highlightContrast, highlightDark, highlightLight, highlightShadow, highlightTint, success, successContrast, successDark, successLight, successShadow, successTint, warning, warningContrast, warningDark, warningLight, warningShadow, warningTint
     , toString
-    , DarkModeStrategy(..)
     )
 
 {-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS vars. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
@@ -23,7 +23,12 @@ module ThemeSpec exposing
 
 # Setup
 
-@docs globalProvider, provider, globalProviderWithDarkMode, providerWithDarkMode
+@docs globalProvider, provider
+
+
+# Dark Mode
+
+@docs globalProviderWithDarkMode, providerWithDarkMode, DarkModeStrategy
 
 
 # Theme Sample
@@ -211,6 +216,12 @@ hashString =
 -- Default
 
 
+{-| Defines the dark mode strategy.
+
+  - `SystemStrategy` uses the user system settings.
+  - `ClassStrategy` uses the presence of a CSS class to determine dark mode.
+
+-}
 type DarkModeStrategy
     = SystemStrategy
     | ClassStrategy String
