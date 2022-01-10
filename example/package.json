@@ -1,16 +1,15 @@
 {
-  "name": "elm-theme-spec",
+  "name": "example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "elm-tooling install",
-    "docs": "elm-doc-preview"
+    "start": "elm-book ./src/Main.elm"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "elm-doc-preview": "^5.0.5",
+    "elm-book": "^1.0.1",
     "elm-tooling": "^1.7.0"
   }
 }

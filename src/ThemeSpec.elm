@@ -1,81 +1,77 @@
 module ThemeSpec exposing
-    ( Theme
-    , ThemeColor
-    , background
-    , backgroundContrast
-    , backgroundFaded
-    , backgroundShadow
-    , baseTheme
-    , borderRadius
-    , borderRadiusLarge
-    , color
-    , colorContrast
-    , colorFaded
-    , colorShadow
-    , danger
-    , dangerContrast
-    , dangerFaded
-    , dangerShadow
-    , focus
-    , focusContrast
-    , focusFaded
-    , focusShadow
-    , fontCode
-    , fontText
-    , fontTitle
-    , globalProvider
-    , highlight
-    , highlightContrast
-    , highlightFaded
-    , highlightShadow
-    , provider
+    ( Theme, ThemeColor
+    , lightTheme, darkTheme
+    , globalProvider, provider, globalProviderWithDarkMode, providerWithDarkMode
     , sample
-    , success
-    , successContrast
-    , successFaded
-    , successShadow
-    , warning
-    , warningContrast
-    , warningFaded
-    , warningShadow
+    , background, borderRadius, borderRadiusLarge, color, colorContrast, colorDark, colorLight, colorShadow, colorTint, danger, dangerContrast, dangerDark, dangerLight, dangerShadow, dangerTint, focus, fontCode, fontText, fontTitle, highlight, highlightContrast, highlightDark, highlightLight, highlightShadow, highlightTint, success, successContrast, successDark, successLight, successShadow, successTint, warning, warningContrast, warningDark, warningLight, warningShadow, warningTint
+    , toString
     )
 
+{-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS vars. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
+
+
+# Theme
+
+@docs Theme, ThemeColor
+
+
+# Default Themes
+
+@docs lightTheme, darkTheme
+
+
+# Setup
+
+@docs globalProvider, provider, globalProviderWithDarkMode, providerWithDarkMode
+
+
+# Theme Sample
+
+@docs sample
+
+
+# Theme Variables
+
+@docs background, borderRadius, borderRadiusLarge, color, colorContrast, colorDark, colorLight, colorShadow, colorTint, danger, dangerContrast, dangerDark, dangerLight, dangerShadow, dangerTint, focus, fontCode, fontText, fontTitle, highlight, highlightContrast, highlightDark, highlightLight, highlightShadow, highlightTint, success, successContrast, successDark, successLight, successShadow, successTint, warning, warningContrast, warningDark, warningLight, warningShadow, warningTint
+
+
+# Low-level
+
+@docs toString
+
+-}
+
 import Html as H
-import Html.Attributes as HA
-
-
-
--- Scope
-
-
-namespace : String
-namespace =
-    "tmspc"
+import ThemeSpec.CSSVariables as CSS
+import ThemeSpec.Providers
+import ThemeSpec.Sample
+import ThemeSpec.Theme
 
 
 
 -- Base
 
 
+{-| -}
 type alias ThemeColor =
     { base : String
-    , faded : String
+    , light : String
+    , dark : String
+    , tint : String
     , contrast : String
     , shadow : String
     }
 
 
+{-| -}
 type alias Theme =
-    { -- font
-      fontTitle : String
+    { fontTitle : String
     , fontText : String
     , fontCode : String
-    , -- border radius
-      borderRadius : Int
+    , borderRadius : Int
     , borderRadiusLarge : Int
-    , -- colors
-      focus : ThemeColor
-    , background : ThemeColor
+    , focus : String
+    , background : String
     , color : ThemeColor
     , highlight : ThemeColor
     , success : ThemeColor
@@ -84,296 +80,394 @@ type alias Theme =
     }
 
 
-baseTheme : Theme
-baseTheme =
-    { -- fonts
-      fontTitle = "serif"
+{-| -}
+lightTheme : Theme
+lightTheme =
+    { fontTitle = "system-ui, sans-serif"
     , fontText = "system-ui, sans-serif"
     , fontCode = "monospaced"
-
-    -- border radius
     , borderRadius = 4
     , borderRadiusLarge = 8
-    , -- colors
-      focus =
-        { base = "#59e7d2"
-        , faded = "#59e7d2"
-        , contrast = "#59e7d2"
-        , shadow = "#59e7d2"
-        }
-    , background =
-        { base = "#fff"
-        , faded = "#eee"
-        , contrast = "#333"
-        , shadow = "#eaeaea"
-        }
+    , focus = "#59e7d2"
+    , background = "#fdfdfd"
     , color =
-        { base = "#333"
-        , faded = "#aaa"
+        { base = "#555"
+        , dark = "#333"
+        , light = "#999"
+        , tint = "#eaeaea"
         , contrast = "#fff"
-        , shadow = "#ccc"
+        , shadow = "#dfdfdf"
         }
     , highlight =
         { base = "#09f"
-        , faded = "#9cf"
+        , dark = "#0291f0"
+        , light = "#1aa3ff"
+        , tint = "#e8f3ff"
         , contrast = "#fff"
         , shadow = "#9cf"
         }
     , success =
-        { base = "#56bd1a"
-        , faded = "#8ed466"
+        { base = "#4ac800"
+        , dark = "#47be02"
+        , light = "#55d00d"
+        , tint = "#eef7e9"
         , contrast = "#fff"
         , shadow = "#8ed466"
         }
     , warning =
-        { base = "#fa0"
-        , faded = "#faf3e0"
+        { base = "#fbb300"
+        , dark = "#f3ad02"
+        , light = "#ffba0e"
+        , tint = "#fbf7eb"
         , contrast = "#fff"
-        , shadow = "#d2b672"
+        , shadow = "#f5c95b"
         }
     , danger =
         { base = "#ff4d4f"
-        , faded = "#f4bd4f"
+        , dark = "#f24648"
+        , light = "#ff6264"
+        , tint = "#fef5f6"
         , contrast = "#fff"
-        , shadow = "#f4bd4f"
+        , shadow = "#f98a8b"
         }
     }
 
 
+{-| -}
+darkTheme : Theme
+darkTheme =
+    { fontTitle = "system-ui, sans-serif"
+    , fontText = "system-ui, sans-serif"
+    , fontCode = "monospaced"
+    , borderRadius = 4
+    , borderRadiusLarge = 8
+    , focus = "#59e7d2"
+    , background = "#20232a"
+    , color =
+        { base = "#ddd"
+        , dark = "#fff"
+        , light = "#aaa"
+        , tint = "#444"
+        , contrast = "#333"
+        , shadow = "#202020"
+        }
+    , highlight =
+        { base = "#09f"
+        , dark = "#0291f0"
+        , light = "#1aa3ff"
+        , tint = "#2d4662"
+        , contrast = "#fff"
+        , shadow = "#2e69a4"
+        }
+    , success =
+        { base = "#4ac800"
+        , dark = "#47be02"
+        , light = "#55d00d"
+        , tint = "#354b29"
+        , contrast = "#fff"
+        , shadow = "#549d2a"
+        }
+    , warning =
+        { base = "#fbb300"
+        , dark = "#f3ad02"
+        , light = "#ffba0e"
+        , tint = "#59513a"
+        , contrast = "#fff"
+        , shadow = "#b79543"
+        }
+    , danger =
+        { base = "#ff4d4f"
+        , dark = "#f24648"
+        , light = "#ff6264"
+        , tint = "#5d383c"
+        , contrast = "#fff"
+        , shadow = "#c75657"
+        }
+    }
+
+
+
+-- Providers
+
+
+{-| -}
 toString : Theme -> String
-toString theme =
-    let
-        colorVars : ( String, Theme -> ThemeColor ) -> List ( String, String )
-        colorVars ( label, getter ) =
-            let
-                themeColor =
-                    getter theme
-            in
-            [ ( label ++ "-base", .base themeColor )
-            , ( label ++ "-faded", .faded themeColor )
-            , ( label ++ "-contrast", .contrast themeColor )
-            , ( label ++ "-shadow", .shadow themeColor )
-            ]
-    in
-    [ [ -- Fonts
-        ( "font-title", theme.fontTitle )
-      , ( "font-text", theme.fontText )
-      , ( "font-code", theme.fontCode )
-
-      -- Border Radius
-      , ( "border-radius", String.fromInt theme.borderRadius ++ "px" )
-      , ( "border-radius-large", String.fromInt theme.borderRadiusLarge ++ "px" )
-      ]
-    , -- Colors
-      [ ( "background", .background )
-      , ( "color", .color )
-      , ( "focus", .focus )
-      , ( "success", .success )
-      , ( "warning", .warning )
-      , ( "danger", .danger )
-      ]
-        |> List.concatMap colorVars
-    ]
-        |> List.concat
-        |> List.map (\( k, v ) -> "--" ++ namespace ++ "-" ++ k ++ ":" ++ v)
-        |> String.join ";"
+toString =
+    ThemeSpec.Theme.toString
 
 
-
--- Applying
-
-
+{-| -}
 globalProvider : Theme -> H.Html msg
 globalProvider theme =
-    H.node "style"
-        []
-        [ H.text <|
-            "body { "
-                ++ toString theme
-                ++ " }"
-        ]
+    ThemeSpec.Providers.globalProvider
+        { light = theme
+        , dark = Nothing
+        }
 
 
-provider : Theme -> H.Attribute msg
+{-| -}
+globalProviderWithDarkMode : { light : Theme, dark : Theme, class : Maybe String } -> H.Html msg
+globalProviderWithDarkMode props =
+    ThemeSpec.Providers.globalProvider
+        { light = props.light
+        , dark = Just ( props.class, props.dark )
+        }
+
+
+{-| -}
+provider :
+    Theme
+    -> List (H.Attribute msg)
+    -> List (H.Html msg)
+    -> H.Html msg
 provider theme =
-    HA.attribute "style" (toString theme)
+    ThemeSpec.Providers.provider
+        { light = theme
+        , dark = Nothing
+        }
+
+
+{-| -}
+providerWithDarkMode :
+    { light : Theme, dark : Theme, class : Maybe String }
+    -> List (H.Attribute msg)
+    -> List (H.Html msg)
+    -> H.Html msg
+providerWithDarkMode props =
+    ThemeSpec.Providers.provider
+        { light = props.light
+        , dark = Just ( props.class, props.dark )
+        }
 
 
 
 -- Accessors
 
 
+{-| -}
 fontTitle : String
 fontTitle =
-    "var(--" ++ namespace ++ "-font-title)"
+    CSS.fontTitle
 
 
+{-| -}
 fontText : String
 fontText =
-    "var(--" ++ namespace ++ "-font-text)"
+    CSS.fontText
 
 
+{-| -}
 fontCode : String
 fontCode =
-    "var(--" ++ namespace ++ "-font-code)"
+    CSS.fontCode
 
 
+{-| -}
 borderRadius : String
 borderRadius =
-    "var(--" ++ namespace ++ "-border-radius)"
+    CSS.borderRadius
 
 
+{-| -}
 borderRadiusLarge : String
 borderRadiusLarge =
-    "var(--" ++ namespace ++ "-border-radius-large)"
+    CSS.borderRadiusLarge
 
 
+{-| -}
 background : String
 background =
-    "var(--" ++ namespace ++ "-background)"
+    CSS.background
 
 
-backgroundFaded : String
-backgroundFaded =
-    "var(--" ++ namespace ++ "-background)"
-
-
-backgroundContrast : String
-backgroundContrast =
-    "var(--" ++ namespace ++ "-background)"
-
-
-backgroundShadow : String
-backgroundShadow =
-    "var(--" ++ namespace ++ "-background)"
-
-
+{-| -}
 color : String
 color =
-    "var(--" ++ namespace ++ "-color)"
+    CSS.color
 
 
-colorFaded : String
-colorFaded =
-    "var(--" ++ namespace ++ "-color)"
+{-| -}
+colorDark : String
+colorDark =
+    CSS.colorDark
 
 
+{-| -}
+colorLight : String
+colorLight =
+    CSS.colorLight
+
+
+{-| -}
+colorTint : String
+colorTint =
+    CSS.colorTint
+
+
+{-| -}
 colorContrast : String
 colorContrast =
-    "var(--" ++ namespace ++ "-color)"
+    CSS.colorContrast
 
 
+{-| -}
 colorShadow : String
 colorShadow =
-    "var(--" ++ namespace ++ "-color)"
+    CSS.colorShadow
 
 
+{-| -}
 focus : String
 focus =
-    "var(--" ++ namespace ++ "-focus)"
+    CSS.focus
 
 
-focusFaded : String
-focusFaded =
-    "var(--" ++ namespace ++ "-focus)"
-
-
-focusContrast : String
-focusContrast =
-    "var(--" ++ namespace ++ "-focus)"
-
-
-focusShadow : String
-focusShadow =
-    "var(--" ++ namespace ++ "-focus)"
-
-
+{-| -}
 highlight : String
 highlight =
-    "var(--" ++ namespace ++ "-highlight)"
+    CSS.highlight
 
 
-highlightFaded : String
-highlightFaded =
-    "var(--" ++ namespace ++ "-highlight)"
+{-| -}
+highlightDark : String
+highlightDark =
+    CSS.highlightDark
 
 
+{-| -}
+highlightLight : String
+highlightLight =
+    CSS.highlightLight
+
+
+{-| -}
+highlightTint : String
+highlightTint =
+    CSS.highlightTint
+
+
+{-| -}
 highlightContrast : String
 highlightContrast =
-    "var(--" ++ namespace ++ "-highlight)"
+    CSS.highlightContrast
 
 
+{-| -}
 highlightShadow : String
 highlightShadow =
-    "var(--" ++ namespace ++ "-highlight)"
+    CSS.highlightShadow
 
 
+{-| -}
 success : String
 success =
-    "var(--" ++ namespace ++ "-success)"
+    CSS.success
 
 
-successFaded : String
-successFaded =
-    "var(--" ++ namespace ++ "-success)"
+{-| -}
+successDark : String
+successDark =
+    CSS.successDark
 
 
+{-| -}
+successLight : String
+successLight =
+    CSS.successLight
+
+
+{-| -}
+successTint : String
+successTint =
+    CSS.successTint
+
+
+{-| -}
 successContrast : String
 successContrast =
-    "var(--" ++ namespace ++ "-success)"
+    CSS.successContrast
 
 
+{-| -}
 successShadow : String
 successShadow =
-    "var(--" ++ namespace ++ "-success)"
+    CSS.successShadow
 
 
+{-| -}
 warning : String
 warning =
-    "var(--" ++ namespace ++ "-warning)"
+    CSS.warning
 
 
-warningFaded : String
-warningFaded =
-    "var(--" ++ namespace ++ "-warning)"
+{-| -}
+warningDark : String
+warningDark =
+    CSS.warningDark
 
 
+{-| -}
+warningLight : String
+warningLight =
+    CSS.warningLight
+
+
+{-| -}
+warningTint : String
+warningTint =
+    CSS.warningTint
+
+
+{-| -}
 warningContrast : String
 warningContrast =
-    "var(--" ++ namespace ++ "-warning)"
+    CSS.warningContrast
 
 
+{-| -}
 warningShadow : String
 warningShadow =
-    "var(--" ++ namespace ++ "-warning)"
+    CSS.warningShadow
 
 
+{-| -}
 danger : String
 danger =
-    "var(--" ++ namespace ++ "-danger)"
+    CSS.danger
 
 
-dangerFaded : String
-dangerFaded =
-    "var(--" ++ namespace ++ "-danger)"
+{-| -}
+dangerDark : String
+dangerDark =
+    CSS.dangerDark
 
 
+{-| -}
+dangerLight : String
+dangerLight =
+    CSS.dangerLight
+
+
+{-| -}
+dangerTint : String
+dangerTint =
+    CSS.dangerTint
+
+
+{-| -}
 dangerContrast : String
 dangerContrast =
-    "var(--" ++ namespace ++ "-danger)"
+    CSS.dangerContrast
 
 
+{-| -}
 dangerShadow : String
 dangerShadow =
-    "var(--" ++ namespace ++ "-danger)"
+    CSS.dangerShadow
 
 
-
--- Theme Sample
-
-
-sample : Theme -> H.Html msg
-sample theme =
-    H.div
-        [ provider theme ]
-        []
+{-| Renders an element that showcases all the current theme's colors and settings.
+-}
+sample : H.Html msg
+sample =
+    ThemeSpec.Sample.sample

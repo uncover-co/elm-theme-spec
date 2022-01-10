@@ -1,7 +1,7 @@
 {
     "type": "package",
     "name": "uncover-co/elm-theme-spec",
-    "summary": "A common theme specification for web applications.",
+    "summary": "A reusable theme specification for web applications.",
     "license": "MPL-2.0",
     "version": "1.0.0",
     "exposed-modules": [
