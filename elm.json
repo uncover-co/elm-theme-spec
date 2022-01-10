@@ -3,7 +3,7 @@
     "name": "uncover-co/elm-theme-spec",
     "summary": "A theme specification for web applications.",
     "license": "MPL-2.0",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "exposed-modules": [
         "ThemeSpec"
     ],
