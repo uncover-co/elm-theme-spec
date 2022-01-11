@@ -1,6 +1,6 @@
 {
   "name": "elm-theme-spec",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "license": "MPL-2.0",
   "author": "Georges Boris",
   "description": "A theme specification for web applications.",
