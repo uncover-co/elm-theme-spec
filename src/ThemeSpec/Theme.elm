@@ -27,7 +27,7 @@ type alias Theme =
     , borderRadiusLarge : Int
     , -- colors
       focus : String
-    , background : String
+    , background : ThemeColor
     , color : ThemeColor
     , highlight : ThemeColor
     , success : ThemeColor
@@ -64,10 +64,10 @@ toString theme =
 
       -- Colors - Simples
       , ( "focus", theme.focus )
-      , ( "background", theme.background )
       ]
     , -- Colors – Rich
       [ ( "color", .color )
+      , ( "background", .background )
       , ( "highlight", .highlight )
       , ( "success", .success )
       , ( "warning", .warning )

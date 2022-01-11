@@ -1,5 +1,10 @@
 module ThemeSpec.CSSVariables exposing
     ( background
+    , backgroundContrast
+    , backgroundDark
+    , backgroundLight
+    , backgroundShadow
+    , backgroundTint
     , borderRadius
     , borderRadiusLarge
     , color
@@ -72,7 +77,32 @@ borderRadiusLarge =
 
 background : String
 background =
-    "var(--" ++ namespace ++ "-background)"
+    "var(--" ++ namespace ++ "-background-base)"
+
+
+backgroundDark : String
+backgroundDark =
+    "var(--" ++ namespace ++ "-background-dark)"
+
+
+backgroundLight : String
+backgroundLight =
+    "var(--" ++ namespace ++ "-background-light)"
+
+
+backgroundTint : String
+backgroundTint =
+    "var(--" ++ namespace ++ "-background-tint)"
+
+
+backgroundContrast : String
+backgroundContrast =
+    "var(--" ++ namespace ++ "-background-contrast)"
+
+
+backgroundShadow : String
+backgroundShadow =
+    "var(--" ++ namespace ++ "-background-shadow)"
 
 
 color : String
