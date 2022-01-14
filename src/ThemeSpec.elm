@@ -101,7 +101,7 @@ lightTheme =
         , dark = "#dadada"
         , light = "#eaeaea"
         , tint = "#f5f5f5"
-        , contrast = "#333"
+        , contrast = "#f5f5f5"
         , shadow = "#dfdfdf"
         }
     , color =
@@ -161,8 +161,8 @@ darkTheme =
         , dark = "#4b5971"
         , light = "#3c4555"
         , tint = "#2a303b"
-        , contrast = "#fff"
-        , shadow = "#202020"
+        , contrast = "#17191e"
+        , shadow = "#111111"
         }
     , color =
         { base = "#c7cbe6"
