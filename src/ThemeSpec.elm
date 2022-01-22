@@ -158,7 +158,7 @@ darkTheme =
     , focus = "#59e7d2"
     , background =
         { base = "#20232a"
-        , dark = "#4b5971"
+        , dark = "#495466"
         , light = "#3c4555"
         , tint = "#2a303b"
         , contrast = "#17191e"
@@ -168,7 +168,7 @@ darkTheme =
         { base = "#c7cbe6"
         , dark = "#fff"
         , light = "#828fa1"
-        , tint = "#3a3e4b"
+        , tint = "#2c2f3b"
         , contrast = "#333"
         , shadow = "#6e7580"
         }
@@ -176,7 +176,7 @@ darkTheme =
         { base = "#09f"
         , dark = "#4db8ff"
         , light = "#017fd3"
-        , tint = "#2d4662"
+        , tint = "#203246"
         , contrast = "#00385e"
         , shadow = "#2e69a4"
         }
@@ -184,7 +184,7 @@ darkTheme =
         { base = "#4ac800"
         , dark = "#63dd1b"
         , light = "#3ea702"
-        , tint = "#354b29"
+        , tint = "#253832"
         , contrast = "#1e5001"
         , shadow = "#37651c"
         }
@@ -192,7 +192,7 @@ darkTheme =
         { base = "#fbb300"
         , dark = "#ffd469"
         , light = "#d29500"
-        , tint = "#59513a"
+        , tint = "#3d3727"
         , contrast = "#654800"
         , shadow = "#7f6831"
         }
@@ -200,7 +200,7 @@ darkTheme =
         { base = "#ff4d4f"
         , dark = "#ff9596"
         , light = "#e02d2f"
-        , tint = "#5d383c"
+        , tint = "#41282a"
         , contrast = "#6a0001"
         , shadow = "#893a3b"
         }

@@ -80,7 +80,7 @@ sample =
                     , HA.style "font-size" "14px"
                     , HA.title (colorName ++ "-tint / border-radius")
                     ]
-                    [ H.span [ HA.title ("font-text / " ++ colorName ++ "-dark") ]
+                    [ H.span [ HA.title ("font-text / " ++ colorName) ]
                         [ H.text "Tinted backgrounds can be used to display information with semantic coloring." ]
                     ]
                 ]
@@ -90,7 +90,7 @@ sample =
         , HA.style "background-color" backgroundContrast
         , HA.style "font-family" fontText
         , HA.style "font-size" "16px"
-        , HA.title "background-tint"
+        , HA.title "background-contrast"
         ]
         [ H.div
             [ HA.style "padding" "40px"
