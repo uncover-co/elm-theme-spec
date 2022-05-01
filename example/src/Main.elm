@@ -3,6 +3,7 @@ module Main exposing (main)
 import ElmBook exposing (Book, book, withChapters)
 import ElmBook.Chapter exposing (chapter, renderComponent)
 import Html exposing (..)
+import ThemeProvider
 import ThemeSpec exposing (darkTheme, lightTheme)
 
 
@@ -13,17 +14,17 @@ main =
             [ chapter "Global"
                 |> renderComponent
                     (div []
-                        [ ThemeSpec.globalProvider lightTheme
+                        [ ThemeProvider.globalProvider lightTheme
                         , ThemeSpec.sample
                         ]
                     )
             , chapter "Global Dark Mode"
                 |> renderComponent
                     (div []
-                        [ ThemeSpec.globalProviderWithDarkMode
+                        [ ThemeProvider.globalProviderWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
+                            , strategy = ThemeProvider.ClassStrategy "elm-book-dark-mode"
                             }
                         , ThemeSpec.sample
                         ]
@@ -31,38 +32,38 @@ main =
             , chapter "Global Dark Mode (System)"
                 |> renderComponent
                     (div []
-                        [ ThemeSpec.globalProviderWithDarkMode
+                        [ ThemeProvider.globalProviderWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , strategy = ThemeSpec.SystemStrategy
+                            , strategy = ThemeProvider.SystemStrategy
                             }
                         , ThemeSpec.sample
                         ]
                     )
             , chapter "Provider"
                 |> renderComponent
-                    (ThemeSpec.provider
+                    (ThemeProvider.provider
                         lightTheme
                         []
                         [ ThemeSpec.sample
-                        , ThemeSpec.provider darkTheme
+                        , ThemeProvider.provider darkTheme
                             []
                             [ ThemeSpec.sample ]
                         ]
                     )
             , chapter "Provider Dark Mode"
                 |> renderComponent
-                    (ThemeSpec.providerWithDarkMode
+                    (ThemeProvider.providerWithDarkMode
                         { light = lightTheme
                         , dark = darkTheme
-                        , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
+                        , strategy = ThemeProvider.ClassStrategy "elm-book-dark-mode"
                         }
                         []
                         [ ThemeSpec.sample
-                        , ThemeSpec.providerWithDarkMode
+                        , ThemeProvider.providerWithDarkMode
                             { light = darkTheme
                             , dark = lightTheme
-                            , strategy = ThemeSpec.ClassStrategy "elm-book-dark-mode"
+                            , strategy = ThemeProvider.ClassStrategy "elm-book-dark-mode"
                             }
                             []
                             [ ThemeSpec.sample ]
@@ -71,17 +72,17 @@ main =
             , chapter "Provider Dark Mode (System)"
                 |> renderComponent
                     (div []
-                        [ ThemeSpec.providerWithDarkMode
+                        [ ThemeProvider.providerWithDarkMode
                             { light = lightTheme
                             , dark = darkTheme
-                            , strategy = ThemeSpec.SystemStrategy
+                            , strategy = ThemeProvider.SystemStrategy
                             }
                             []
                             [ ThemeSpec.sample
-                            , ThemeSpec.providerWithDarkMode
+                            , ThemeProvider.providerWithDarkMode
                                 { light = darkTheme
                                 , dark = lightTheme
-                                , strategy = ThemeSpec.SystemStrategy
+                                , strategy = ThemeProvider.SystemStrategy
                                 }
                                 []
                                 [ ThemeSpec.sample ]
