@@ -2,7 +2,7 @@ module ThemeSpec exposing
     ( ThemeSpec, ThemeSpecBackground, ThemeSpecColor, theme
     , lightTheme, darkTheme
     , sample
-    , fontTitle, fontText, fontCode, borderRadius, borderRadiusLarge, focus, background, backgroundDark, backgroundDarker, backgroundShadow, base, baseLight, baseLighter, baseShadow, danger, dangerLight, dangerLighter, dangerShadow, accent, accentLight, accentLighter, accentShadow, success, successLight, successLighter, successShadow, warning, warningLight, warningLighter, warningShadow
+    , fontTitle, fontText, fontCode, borderRadius, borderRadiusLarge, focus, background, base, accent, success, warning, danger
     )
 
 {-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS variables. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
@@ -22,7 +22,7 @@ module ThemeSpec exposing
 
 # Theme Variables
 
-@docs fontTitle, fontText, fontCode, borderRadius, borderRadiusLarge, focus, background, backgroundDark, backgroundDarker, backgroundShadow, base, baseLight, baseLighter, baseShadow, danger, dangerLight, dangerLighter, dangerShadow, accent, accentLight, accentLighter, accentShadow, success, successLight, successLighter, successShadow, warning, warningLight, warningLighter, warningShadow
+@docs fontTitle, fontText, fontCode, borderRadius, borderRadiusLarge, focus, background, base, accent, success, warning, danger
 
 -}
 
@@ -308,196 +308,106 @@ focus =
     "var(--" ++ namespace ++ "-focus)"
 
 
+{-| CSS Variables based on **background** colors.
 
--- Background
+  - background.base `var(--tmspc-background)`
+  - background.dark `var(--tmspc-background-dark)`
+  - background.darker `var(--tmspc-background-darker)`
+  - background.shadow `var(--tmspc-background-shadow)`
 
-
-{-| `var(--tmspc-background)`
 -}
-background : String
+background : ThemeSpecBackground
 background =
-    "var(--" ++ namespace ++ "-background)"
+    { base = "var(--" ++ namespace ++ "-background)"
+    , dark = "var(--" ++ namespace ++ "-background-dark)"
+    , darker = "var(--" ++ namespace ++ "-background-darker)"
+    , shadow = "var(--" ++ namespace ++ "-background-shadow)"
+    }
 
 
-{-| `var(--tmspc-background-dark)`
+{-| CSS Variables based on **base** colors.
+
+  - base.base `var(--tmspc-base)`
+  - base.dark `var(--tmspc-base-dark)`
+  - base.darker `var(--tmspc-base-darker)`
+  - base.shadow `var(--tmspc-base-shadow)`
+
 -}
-backgroundDark : String
-backgroundDark =
-    "var(--" ++ namespace ++ "-background-dark)"
-
-
-{-| `var(--tmspc-background-darker)`
--}
-backgroundDarker : String
-backgroundDarker =
-    "var(--" ++ namespace ++ "-background-darker)"
-
-
-{-| `var(--tmspc-background-shadow)`
--}
-backgroundShadow : String
-backgroundShadow =
-    "var(--" ++ namespace ++ "-background-shadow)"
-
-
-
--- Base
-
-
-{-| `var(--tmspc-base)`
--}
-base : String
+base : ThemeSpecColor
 base =
-    "var(--" ++ namespace ++ "-base)"
+    { base = "var(--" ++ namespace ++ "-base)"
+    , light = "var(--" ++ namespace ++ "-base-light)"
+    , lighter = "var(--" ++ namespace ++ "-base-lighter)"
+    , shadow = "var(--" ++ namespace ++ "-base-shadow)"
+    }
 
 
-{-| `var(--tmspc-base-light)`
+{-| CSS Variables based on **accent** colors.
+
+  - accent.base `var(--tmspc-accent)`
+  - accent.dark `var(--tmspc-accent-dark)`
+  - accent.darker `var(--tmspc-accent-darker)`
+  - accent.shadow `var(--tmspc-accent-shadow)`
+
 -}
-baseLight : String
-baseLight =
-    "var(--" ++ namespace ++ "-base-light)"
-
-
-{-| `var(--tmspc-base-lighter)`
--}
-baseLighter : String
-baseLighter =
-    "var(--" ++ namespace ++ "-base-lighter)"
-
-
-{-| `var(--tmspc-base-shadow)`
--}
-baseShadow : String
-baseShadow =
-    "var(--" ++ namespace ++ "-base-shadow)"
-
-
-
--- Accent
-
-
-{-| `var(--tmspc-accent)`
--}
-accent : String
+accent : ThemeSpecColor
 accent =
-    "var(--" ++ namespace ++ "-accent)"
+    { base = "var(--" ++ namespace ++ "-accent)"
+    , light = "var(--" ++ namespace ++ "-accent-light)"
+    , lighter = "var(--" ++ namespace ++ "-accent-lighter)"
+    , shadow = "var(--" ++ namespace ++ "-accent-shadow)"
+    }
 
 
-{-| `var(--tmspc-accent-light)`
+{-| CSS Variables based on **success** colors.
+
+  - success.base `var(--tmspc-success)`
+  - success.dark `var(--tmspc-success-dark)`
+  - success.darker `var(--tmspc-success-darker)`
+  - success.shadow `var(--tmspc-success-shadow)`
+
 -}
-accentLight : String
-accentLight =
-    "var(--" ++ namespace ++ "-accent-light)"
-
-
-{-| `var(--tmspc-accent-lighter)`
--}
-accentLighter : String
-accentLighter =
-    "var(--" ++ namespace ++ "-accent-lighter)"
-
-
-{-| `var(--tmspc-accent-shadow)`
--}
-accentShadow : String
-accentShadow =
-    "var(--" ++ namespace ++ "-accent-shadow)"
-
-
-
--- Success
-
-
-{-| `var(--tmspc-success)`
--}
-success : String
+success : ThemeSpecColor
 success =
-    "var(--" ++ namespace ++ "-success)"
+    { base = "var(--" ++ namespace ++ "-success)"
+    , light = "var(--" ++ namespace ++ "-success-light)"
+    , lighter = "var(--" ++ namespace ++ "-success-lighter)"
+    , shadow = "var(--" ++ namespace ++ "-success-shadow)"
+    }
 
 
-{-| `var(--tmspc-success-light)`
+{-| CSS Variables based on **warning** colors.
+
+  - warning.base `var(--tmspc-warning)`
+  - warning.dark `var(--tmspc-warning-dark)`
+  - warning.darker `var(--tmspc-warning-darker)`
+  - warning.shadow `var(--tmspc-warning-shadow)`
+
 -}
-successLight : String
-successLight =
-    "var(--" ++ namespace ++ "-success-light)"
-
-
-{-| `var(--tmspc-success-lighter)`
--}
-successLighter : String
-successLighter =
-    "var(--" ++ namespace ++ "-success-lighter)"
-
-
-{-| `var(--tmspc-success-shadow)`
--}
-successShadow : String
-successShadow =
-    "var(--" ++ namespace ++ "-success-shadow)"
-
-
-
--- Warning
-
-
-{-| `var(--tmspc-warning)`
--}
-warning : String
+warning : ThemeSpecColor
 warning =
-    "var(--" ++ namespace ++ "-warning)"
+    { base = "var(--" ++ namespace ++ "-warning)"
+    , light = "var(--" ++ namespace ++ "-warning-light)"
+    , lighter = "var(--" ++ namespace ++ "-warning-lighter)"
+    , shadow = "var(--" ++ namespace ++ "-warning-shadow)"
+    }
 
 
-{-| `var(--tmspc-warning-light)`
+{-| CSS Variables based on **danger** colors.
+
+  - danger.base `var(--tmspc-danger)`
+  - danger.dark `var(--tmspc-danger-dark)`
+  - danger.darker `var(--tmspc-danger-darker)`
+  - danger.shadow `var(--tmspc-danger-shadow)`
+
 -}
-warningLight : String
-warningLight =
-    "var(--" ++ namespace ++ "-warning-light)"
-
-
-{-| `var(--tmspc-warning-lighter)`
--}
-warningLighter : String
-warningLighter =
-    "var(--" ++ namespace ++ "-warning-lighter)"
-
-
-{-| `var(--tmspc-warning-shadow)`
--}
-warningShadow : String
-warningShadow =
-    "var(--" ++ namespace ++ "-warning-shadow)"
-
-
-
--- Danger
-
-
-{-| `var(--tmspc-danger)`
--}
-danger : String
+danger : ThemeSpecColor
 danger =
-    "var(--" ++ namespace ++ "-danger)"
-
-
-{-| `var(--tmspc-danger-light)`
--}
-dangerLight : String
-dangerLight =
-    "var(--" ++ namespace ++ "-danger-light)"
-
-
-{-| `var(--tmspc-danger-lighter)`
--}
-dangerLighter : String
-dangerLighter =
-    "var(--" ++ namespace ++ "-danger-lighter)"
-
-
-{-| `var(--tmspc-danger-shadow)`
--}
-dangerShadow : String
-dangerShadow =
-    "var(--" ++ namespace ++ "-danger-shadow)"
+    { base = "var(--" ++ namespace ++ "-danger)"
+    , light = "var(--" ++ namespace ++ "-danger-light)"
+    , lighter = "var(--" ++ namespace ++ "-danger-lighter)"
+    , shadow = "var(--" ++ namespace ++ "-danger-shadow)"
+    }
 
 
 {-| Renders an element that showcases all the current theme's colors and settings.
@@ -532,11 +442,7 @@ sample =
 
         colorSample :
             { label : String
-            , lighterLabel : String
-            , base : String
-            , light : String
-            , lighter : String
-            , shadow : String
+            , theme : ThemeSpecColor
             }
             -> H.Html msg
         colorSample props =
@@ -551,31 +457,31 @@ sample =
                     [ HA.style "display" "flex"
                     , HA.style "align-items" "center"
                     , HA.style "justify-content" "space-between"
-                    , HA.style "color" props.lighter
+                    , HA.style "color" props.theme.lighter
                     , HA.style "width" "100%"
                     , HA.style "border" "none"
                     , HA.style "border-radius" borderRadius
-                    , HA.style "background-color" props.base
+                    , HA.style "background-color" props.theme.base
                     , HA.style "font-size" "18px"
                     , HA.style "font-family" fontText
                     , HA.style "margin" "8px 0 0"
                     , HA.style "padding" "12px 24px"
-                    , HA.style "box-shadow" ("0 0 8px " ++ props.shadow)
+                    , HA.style "box-shadow" ("0 0 8px " ++ props.theme.shadow)
                     , HA.title ("" ++ colorName ++ " / border-radius")
                     ]
                     [ H.span [ HA.title ("font-text / " ++ colorName ++ "-lighter") ] [ H.text props.label ]
-                    , shapes colorName props.light props.lighter
+                    , shapes colorName props.theme.light props.theme.lighter
                     ]
                 , H.p
                     [ HA.style "padding-top" "12px"
                     , HA.style "margin" "12px 0"
                     , HA.style "padding" "16px 16px"
                     , HA.style "border-radius" borderRadius
-                    , HA.style "border-left" ("8px solid " ++ props.light)
-                    , HA.style "background-color" props.lighter
-                    , HA.style "color" props.base
+                    , HA.style "border-left" ("8px solid " ++ props.theme.light)
+                    , HA.style "background-color" props.theme.lighter
+                    , HA.style "color" props.theme.base
                     , HA.style "font-size" "14px"
-                    , HA.title (props.lighterLabel ++ " / border-radius")
+                    , HA.title (props.label ++ "-lighter / border-radius")
                     ]
                     [ H.span [ HA.title ("font-text / " ++ colorName) ]
                         [ H.text "Tinted backgrounds can be used to display information with semantic coloring." ]
@@ -584,7 +490,7 @@ sample =
     in
     H.div
         [ HA.style "padding" "40px"
-        , HA.style "background-color" backgroundDarker
+        , HA.style "background-color" background.darker
         , HA.style "font-family" fontText
         , HA.style "font-size" "16px"
         , HA.title "background-darker"
@@ -592,8 +498,8 @@ sample =
         [ H.div
             [ HA.style "padding" "40px"
             , HA.style "border-radius" borderRadiusLarge
-            , HA.style "background-color" background
-            , HA.style "box-shadow" ("0 0 8px " ++ backgroundShadow)
+            , HA.style "background-color" background.base
+            , HA.style "box-shadow" ("0 0 8px " ++ background.shadow)
             , HA.style "font-family" fontText
             , HA.style "font-size" "16px"
             , HA.title "background / background-shadow / border-radius-large"
@@ -602,14 +508,14 @@ sample =
                 [ H.h1
                     [ HA.style "font-family" fontTitle
                     , HA.style "font-size" "40px"
-                    , HA.style "color" baseLight
+                    , HA.style "color" base.light
                     , HA.style "margin" "0px"
                     , HA.style "padding-bottom" "12px"
                     , HA.title "font-title / base-light"
                     ]
                     [ H.text "Theme Sampler" ]
                 , H.p
-                    [ HA.style "color" base
+                    [ HA.style "color" base.base
                     , HA.style "margin" "0 0 16px"
                     , HA.title "font-text / base"
                     ]
@@ -620,7 +526,7 @@ sample =
                 , H.hr
                     [ HA.style "margin" "20px 0"
                     , HA.style "border" "none"
-                    , HA.style "border-top" ("2px solid " ++ backgroundDarker)
+                    , HA.style "border-top" ("2px solid " ++ background.darker)
                     , HA.title "background-darker"
                     ]
                     []
@@ -631,8 +537,8 @@ sample =
                     , HA.style "margin" "0"
                     , HA.style "padding" "16px 16px 16px 24px"
                     , HA.style "border-radius" borderRadius
-                    , HA.style "background-color" backgroundDark
-                    , HA.style "color" base
+                    , HA.style "background-color" background.dark
+                    , HA.style "color" base.base
                     , HA.style "font-size" "14px"
                     , HA.title "background-dark / border-radius"
                     ]
@@ -663,7 +569,7 @@ sample =
                             , HA.style "height" "20px"
                             , HA.style "margin" "0 8px"
                             , HA.style "border-radius" "4px"
-                            , HA.style "background" backgroundDarker
+                            , HA.style "background" background.darker
                             , HA.title "background-darker / focus (outline)"
                             ]
                             []
@@ -673,7 +579,7 @@ sample =
                             , HA.style "height" "20px"
                             , HA.style "margin" "0 8px"
                             , HA.style "border-radius" "50%"
-                            , HA.style "background" base
+                            , HA.style "background" base.base
                             , HA.style "outline" ("3px solid " ++ focus)
                             , HA.style "outline-offset" "3px"
                             , HA.title "base / focus (outline)"
@@ -683,7 +589,7 @@ sample =
                     ]
                 , H.p
                     [ HA.style "font-size" "14px"
-                    , HA.style "color" baseLight
+                    , HA.style "color" base.light
                     , HA.style "margin" "16px 0 40px"
                     , HA.title "base-light"
                     ]
@@ -700,43 +606,23 @@ sample =
             , H.div []
                 [ colorSample
                     { label = "Base"
-                    , lighterLabel = "background-darker"
-                    , base = base
-                    , light = baseLight
-                    , lighter = baseLighter
-                    , shadow = baseShadow
+                    , theme = base
                     }
                 , colorSample
                     { label = "Accent"
-                    , lighterLabel = "accenter-lighter"
-                    , base = accent
-                    , light = accentLight
-                    , lighter = accentLighter
-                    , shadow = accentShadow
+                    , theme = accent
                     }
                 , colorSample
                     { label = "Success"
-                    , lighterLabel = "success-lighter"
-                    , base = success
-                    , light = successLight
-                    , lighter = successLighter
-                    , shadow = successShadow
+                    , theme = success
                     }
                 , colorSample
                     { label = "Warning"
-                    , lighterLabel = "warning-lighter"
-                    , base = warning
-                    , light = warningLight
-                    , lighter = warningLighter
-                    , shadow = warningShadow
+                    , theme = warning
                     }
                 , colorSample
                     { label = "Danger"
-                    , lighterLabel = "danger-lighter"
-                    , base = danger
-                    , light = dangerLight
-                    , lighter = dangerLighter
-                    , shadow = dangerShadow
+                    , theme = danger
                     }
                 ]
             ]
