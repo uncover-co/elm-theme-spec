@@ -158,38 +158,38 @@ lightTheme =
         , focus = "#59e7d2"
         , background =
             { base = "#fdfdfd"
-            , dark = "#f5f5f5"
-            , darker = "#eaeaea"
-            , shadow = "#dfdfdf"
+            , dark = "#eaeaea"
+            , darker = "#dadada"
+            , shadow = "#d0d0d0"
             }
         , base =
             { base = "#3e3e3e"
-            , light = "#595959"
-            , lighter = "#e7e7e7"
+            , light = "#ababab"
+            , lighter = "#f2f2f2"
             , shadow = "#aaa"
             }
         , accent =
             { base = "#008deb"
             , light = "#4db8ff"
-            , lighter = "#e8f3ff"
+            , lighter = "#f1f7fd"
             , shadow = "#9cf"
             }
         , success =
-            { base = "#40ad00"
+            { base = "#44b701"
             , light = "#63dd1b"
-            , lighter = "#eef7e9"
-            , shadow = "#8ed466"
+            , lighter = "#f3faf0"
+            , shadow = "#a4cf8b"
             }
         , warning =
             { base = "#e69d00"
-            , light = "#ffc533"
-            , lighter = "#f9f5ea"
-            , shadow = "#f5c95b"
+            , light = "#ffbb0f"
+            , lighter = "#f8f6f2"
+            , shadow = "#d5bc7d"
             }
         , danger =
             { base = "#dc3132"
             , light = "#fc585a"
-            , lighter = "#ffeff0"
+            , lighter = "#fcf3f4"
             , shadow = "#f98a8b"
             }
         }
@@ -214,32 +214,32 @@ darkTheme =
         , base =
             { base = "#e0e4f5"
             , light = "#6d7282"
-            , lighter = "#30323b"
+            , lighter = "#2c2e35"
             , shadow = "#646566"
             }
         , accent =
             { base = "#09f"
             , light = "#017fd3"
-            , lighter = "#203246"
-            , shadow = "#2e69a4"
+            , lighter = "#1f2f42"
+            , shadow = "#2e5983"
             }
         , success =
             { base = "#4ac800"
             , light = "#3ea702"
             , lighter = "#253832"
-            , shadow = "#37651c"
+            , shadow = "#21312c"
             }
         , warning =
             { base = "#fbb300"
             , light = "#d29500"
-            , lighter = "#3d3727"
-            , shadow = "#7f6831"
+            , lighter = "#383324"
+            , shadow = "#61563d"
             }
         , danger =
             { base = "#ff4d4f"
             , light = "#e02d2f"
-            , lighter = "#41282a"
-            , shadow = "#893a3b"
+            , lighter = "#322426"
+            , shadow = "#753c3d"
             }
         }
 
@@ -490,10 +490,10 @@ sample =
     in
     H.div
         [ HA.style "padding" "40px"
-        , HA.style "background-color" background.darker
+        , HA.style "background-color" background.dark
         , HA.style "font-family" fontText
         , HA.style "font-size" "16px"
-        , HA.title "background-darker"
+        , HA.title "background-dark"
         ]
         [ H.div
             [ HA.style "padding" "40px"
@@ -508,10 +508,10 @@ sample =
                 [ H.h1
                     [ HA.style "font-family" fontTitle
                     , HA.style "font-size" "40px"
-                    , HA.style "color" base.light
+                    , HA.style "color" base.base
                     , HA.style "margin" "0px"
                     , HA.style "padding-bottom" "12px"
-                    , HA.title "font-title / base-light"
+                    , HA.title "font-title / base"
                     ]
                     [ H.text "Theme Sampler" ]
                 , H.p
@@ -537,10 +537,10 @@ sample =
                     , HA.style "margin" "0"
                     , HA.style "padding" "16px 16px 16px 24px"
                     , HA.style "border-radius" borderRadius
-                    , HA.style "background-color" background.dark
+                    , HA.style "background-color" base.lighter
                     , HA.style "color" base.base
                     , HA.style "font-size" "14px"
-                    , HA.title "background-dark / border-radius"
+                    , HA.title "base-lighter / border-radius"
                     ]
                     [ H.p
                         [ HA.style "margin" "0"
