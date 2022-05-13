@@ -1,7 +1,7 @@
 module ThemeSpec exposing
     ( lightTheme, darkTheme, theme, themeSpec, ThemeSpec, ThemeSpecData, ThemeSpecColor
     , sample
-    , fontTitle, fontText, fontCode, background, baseline, primary, success, warning, danger, ThemeSpecColorVars
+    , fontTitle, fontText, fontCode, background, baseline, primary, secondary, success, warning, danger, ThemeSpecColorVars
     )
 
 {-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS variables. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
@@ -16,7 +16,7 @@ module ThemeSpec exposing
 
 # Theme Variables
 
-@docs fontTitle, fontText, fontCode, background, baseline, primary, success, warning, danger, ThemeSpecColorVars
+@docs fontTitle, fontText, fontCode, background, baseline, primary, secondary, success, warning, danger, ThemeSpecColorVars
 
 -}
 
