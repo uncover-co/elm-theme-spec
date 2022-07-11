@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import ElmBook exposing (Book, book, withChapterGroups, withChapters)
+import ElmBook exposing (Book, book, withChapterGroups)
 import ElmBook.Chapter exposing (chapter, render, renderComponent)
 import ElmBook.ComponentOptions
 import Html exposing (..)
@@ -26,26 +26,15 @@ main =
                     |> render """
 A common theme specification.
 
-> **Background**
-- `base` e.g. the main background color
-- `light` e.g. small callouts and details
-- `contrast` e.g. usually darker than `light`. used as the background underneath your main background on card lists, etc.
+> **Base**
+- `bg` e.g. the main background color
+- `fg` e.g. the main foreground color
+- `aux` e.g. accessible foreground variant (usually used for lighter text)
 
-> **Baseline**
-- `base` e.g. the main text color
-- `light` e.g. the color used for faded text
-- `contrast` e.g. used for things ui details with higher contrast
-
-> **Primary**
-- `base` e.g. the main button color
-- `light` e.g. used for branded icons
-- `contrast` e.g. the text on top of the main button color
-
-> **Secondary**
-- `base` e.g. the secondary button color. commonly similar to the baseline color.
-- `light` e.g. used for icons and such
-- `contrast` e.g. the color on top of the button
-
+> **Primary, Secondary, Etc.**
+- `bg` e.g. color used for button background
+- `fg` e.g. the color used for primary texts on a base background
+- `aux` e.g. color used for text on top of a primary background
 """
                 ]
               )

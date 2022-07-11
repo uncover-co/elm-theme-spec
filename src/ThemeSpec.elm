@@ -1,7 +1,7 @@
 module ThemeSpec exposing
     ( lightTheme, darkTheme, theme, themeSpec, ThemeSpec, ThemeSpecData, ThemeSpecColor
     , sample
-    , fontTitle, fontText, fontCode, background, baseline, primary, secondary, success, warning, danger, ThemeSpecColorVars
+    , fonts, base, primary, secondary, success, warning, danger, ThemeSpecColorVars
     )
 
 {-| ThemeSpec is a theme specification that can be used across a variety of projects to quickly theme them based on CSS variables. Themes are scoped and multiple can be used at the same time in an application. ThemeSpec is fully compatible with darkmode and any theme can have dark variants.
@@ -16,7 +16,7 @@ module ThemeSpec exposing
 
 # Theme Variables
 
-@docs fontTitle, fontText, fontCode, background, baseline, primary, secondary, success, warning, danger, ThemeSpecColorVars
+@docs fonts, base, primary, secondary, success, warning, danger, ThemeSpecColorVars
 
 -}
 
@@ -24,23 +24,6 @@ import Color exposing (Color)
 import Html as H
 import Html.Attributes as HA
 import ThemeProvider exposing (Theme)
-
-
-
--- ThemeSpec
--- type alias ThemeSpec =
---     { fontTitle : String
---     , fontText : String
---     , fontCode : String
---     , background : Color
---     , details : Color
---     , base : Color
---     , primary : Color
---     , success : Color
---     , warning : Color
---     , danger : Color
---     }
--- Creating Theme
 
 
 {-| Used for turning a `ThemeSpec` into a `Theme` used by [elm-theme-provider](https://package.elm-lang.org/packages/uncover-co/elm-theme-provider/latest/).
@@ -67,9 +50,9 @@ toThemeProviderTheme data extra =
 
         colorSpec : String -> ThemeSpecColor -> List ( String, String )
         colorSpec name color =
-            [ colorVars name color.base
-            , colorVars (name ++ "-light") color.light
-            , colorVars (name ++ "-contrast") color.contrast
+            [ colorVars (name ++ "-bg") color.bg
+            , colorVars (name ++ "-fg") color.fg
+            , colorVars (name ++ "-aux") color.aux
             ]
                 |> List.concat
     in
@@ -77,8 +60,7 @@ toThemeProviderTheme data extra =
       , ( "font-text", data.fonts.text )
       , ( "font-code", data.fonts.code )
       ]
-    , colorSpec "background" data.colors.background
-    , colorSpec "baseline" data.colors.baseline
+    , colorSpec "base" data.colors.base
     , colorSpec "primary" data.colors.primary
     , colorSpec "secondary" data.colors.secondary
     , colorSpec "success" data.colors.success
@@ -106,8 +88,7 @@ type alias ThemeSpecData =
         , code : String
         }
     , colors :
-        { background : ThemeSpecColor
-        , baseline : ThemeSpecColor
+        { base : ThemeSpecColor
         , primary : ThemeSpecColor
         , secondary : ThemeSpecColor
         , success : ThemeSpecColor
@@ -119,9 +100,9 @@ type alias ThemeSpecData =
 
 {-| -}
 type alias ThemeSpecColor =
-    { base : Color
-    , light : Color
-    , contrast : Color
+    { bg : Color
+    , fg : Color
+    , aux : Color
     }
 
 
@@ -151,43 +132,38 @@ lightTheme =
         { fonts =
             { title = "system-ui, sans-serif"
             , text = "system-ui, sans-serif"
-            , code = "monospaced"
+            , code = "monospace"
             }
         , colors =
-            { background =
-                { base = Color.rgb255 253 253 253
-                , light = Color.rgb255 223 223 223
-                , contrast = Color.rgb255 225 225 225
-                }
-            , baseline =
-                { base = Color.rgb255 62 62 62
-                , light = Color.rgb255 150 150 150
-                , contrast = Color.rgb255 0 0 0
+            { base =
+                { bg = Color.rgb255 253 253 253
+                , fg = Color.rgb255 62 62 62
+                , aux = Color.rgb255 150 150 150
                 }
             , primary =
-                { base = Color.rgb255 0 141 235
-                , light = Color.rgb255 95 185 244
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 0 141 235
+                , fg = Color.rgb255 95 185 244
+                , aux = Color.rgb255 255 255 255
                 }
             , secondary =
-                { base = Color.rgb255 91 111 125
-                , light = Color.rgb255 141 160 174
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 91 111 125
+                , fg = Color.rgb255 141 160 174
+                , aux = Color.rgb255 255 255 255
                 }
             , success =
-                { base = Color.rgb255 68 183 1
-                , light = Color.rgb255 115 209 60
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 68 183 1
+                , fg = Color.rgb255 115 209 60
+                , aux = Color.rgb255 255 255 255
                 }
             , warning =
-                { base = Color.rgb255 230 157 0
-                , light = Color.rgb255 249 188 34
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 230 157 0
+                , fg = Color.rgb255 249 188 34
+                , aux = Color.rgb255 255 255 255
                 }
             , danger =
-                { base = Color.rgb255 220 49 50
-                , light = Color.rgb255 248 102 103
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 220 49 50
+                , fg = Color.rgb255 248 102 103
+                , aux = Color.rgb255 255 255 255
                 }
             }
         }
@@ -201,43 +177,38 @@ darkTheme =
         { fonts =
             { title = "system-ui, sans-serif"
             , text = "system-ui, sans-serif"
-            , code = "monospaced"
+            , code = "monospace"
             }
         , colors =
-            { background =
-                { base = Color.rgb255 37 40 48
-                , light = Color.rgb255 56 60 70
-                , contrast = Color.rgb255 22 24 29
-                }
-            , baseline =
-                { base = Color.rgb255 227 227 227
-                , light = Color.rgb255 110 114 120
-                , contrast = Color.rgb255 255 255 255
+            { base =
+                { bg = Color.rgb255 37 40 48
+                , fg = Color.rgb255 227 227 227
+                , aux = Color.rgb255 110 114 120
                 }
             , primary =
-                { base = Color.rgb255 0 153 255
-                , light = Color.rgb255 145 190 243
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 0 153 255
+                , fg = Color.rgb255 145 190 243
+                , aux = Color.rgb255 255 255 255
                 }
             , secondary =
-                { base = Color.rgb255 21 22 26
-                , light = Color.rgb255 57 61 76
-                , contrast = Color.rgb255 255 255 255
+                { bg = Color.rgb255 21 22 26
+                , fg = Color.rgb255 255 255 255
+                , aux = Color.rgb255 255 255 255
                 }
             , success =
-                { base = Color.rgb255 74 200 0
-                , light = Color.rgb255 119 223 59
-                , contrast = Color.rgb255 27 74 0
+                { bg = Color.rgb255 74 200 0
+                , fg = Color.rgb255 119 223 59
+                , aux = Color.rgb255 27 74 0
                 }
             , warning =
-                { base = Color.rgb255 251 179 0
-                , light = Color.rgb255 255 215 114
-                , contrast = Color.rgb255 91 65 0
+                { bg = Color.rgb255 251 179 0
+                , fg = Color.rgb255 255 215 114
+                , aux = Color.rgb255 91 65 0
                 }
             , danger =
-                { base = Color.rgb255 255 77 79
-                , light = Color.rgb255 242 156 156
-                , contrast = Color.rgb255 91 0 1
+                { bg = Color.rgb255 255 77 79
+                , fg = Color.rgb255 242 156 156
+                , aux = Color.rgb255 91 0 1
                 }
             }
         }
@@ -255,57 +226,44 @@ namespace =
 
 {-| `var(--tmspc-font-title)`
 -}
-fontTitle : String
-fontTitle =
-    "var(--" ++ namespace ++ "-font-title)"
-
-
-{-| `var(--tmspc-font-text)`
--}
-fontText : String
-fontText =
-    "var(--" ++ namespace ++ "-font-text)"
-
-
-{-| `var(--tmspc-font-code)`
--}
-fontCode : String
-fontCode =
-    "var(--" ++ namespace ++ "-font-code)"
+fonts :
+    { title : String
+    , text : String
+    , code : String
+    }
+fonts =
+    { title = "var(--" ++ namespace ++ "-font-title)"
+    , text = "var(--" ++ namespace ++ "-font-text)"
+    , code = "var(--" ++ namespace ++ "-font-code)"
+    }
 
 
 {-| -}
 type alias ThemeSpecColorVars =
-    { base : String
-    , baseChannels : String
-    , light : String
-    , lightChannels : String
-    , contrast : String
-    , contrastChannels : String
+    { bg : String
+    , bgChannels : String
+    , fg : String
+    , fgChannels : String
+    , aux : String
+    , auxChannels : String
     }
 
 
 toColorVars : String -> ThemeSpecColorVars
 toColorVars name =
-    { base = "var(--" ++ namespace ++ "-" ++ name ++ ")"
-    , baseChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-ch)"
-    , light = "var(--" ++ namespace ++ "-" ++ name ++ "-light)"
-    , lightChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-light-ch)"
-    , contrast = "var(--" ++ namespace ++ "-" ++ name ++ "-contrast)"
-    , contrastChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-contrast-ch)"
+    { bg = "var(--" ++ namespace ++ "-" ++ name ++ "-bg)"
+    , fg = "var(--" ++ namespace ++ "-" ++ name ++ "-fg)"
+    , aux = "var(--" ++ namespace ++ "-" ++ name ++ "-aux)"
+    , bgChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-bg-ch)"
+    , fgChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-fg-ch)"
+    , auxChannels = "var(--" ++ namespace ++ "-" ++ name ++ "-aux-ch)"
     }
 
 
 {-| -}
-background : ThemeSpecColorVars
-background =
-    toColorVars "background"
-
-
-{-| -}
-baseline : ThemeSpecColorVars
-baseline =
-    toColorVars "baseline"
+base : ThemeSpecColorVars
+base =
+    toColorVars "base"
 
 
 {-| -}
@@ -338,186 +296,96 @@ danger =
     toColorVars "danger"
 
 
-{-| Renders an element that showcases all the current theme's colors and settings.
--}
+{-| -}
 sample : H.Html msg
 sample =
     let
-        shapes : String -> String -> String -> H.Html msg
-        shapes colorName first second =
+        colorVars : List ThemeSpecColorVars
+        colorVars =
+            [ primary
+            , secondary
+            , success
+            , warning
+            , danger
+            ]
+
+        colorSample : ThemeSpecColorVars -> H.Html msg
+        colorSample color =
             H.div
                 [ HA.style "display" "flex"
-                , HA.style "align-items" "center"
+                , HA.style "flex-direction" "column"
+                , HA.style "gap" "8px"
+                , HA.style "text-align" "center"
+                , HA.style "grid-column" "span 1 / span 1"
                 ]
                 [ H.div
-                    [ HA.style "border-radius" "2px"
-                    , HA.style "width" "20px"
-                    , HA.style "height" "20px"
-                    , HA.style "background-color" first
-                    , HA.title ("" ++ colorName ++ "-light")
+                    [ HA.style "background" color.bg
+                    , HA.style "border-radius" "4px"
+                    , HA.style "box-shadow" ("0 0 6px rgb(" ++ color.bgChannels ++ " / .8)")
+                    , HA.style "color" color.aux
+                    , HA.style "padding" "8px 12px"
                     ]
-                    []
+                    [ H.text "Button" ]
                 , H.div
-                    [ HA.style "border-radius" "50%"
-                    , HA.style "width" "20px"
-                    , HA.style "height" "20px"
-                    , HA.style "background-color" second
-                    , HA.style "margin-left" "16px"
-                    , HA.title ("" ++ colorName ++ "-lighter")
-                    ]
-                    []
-                ]
-
-        colorSample :
-            { label : String
-            , theme : ThemeSpecColorVars
-            }
-            -> H.Html msg
-        colorSample props =
-            let
-                colorName =
-                    String.toLower props.label
-            in
-            H.div
-                [ HA.style "margin" "20px 0"
-                ]
-                [ H.button
-                    [ HA.style "display" "flex"
-                    , HA.style "align-items" "center"
-                    , HA.style "justify-content" "space-between"
-                    , HA.style "color" props.theme.contrast
-                    , HA.style "width" "100%"
-                    , HA.style "border" "none"
+                    [ HA.style "color" color.fg
+                    , HA.style "border" ("3px solid " ++ color.fg)
                     , HA.style "border-radius" "4px"
-                    , HA.style "background-color" props.theme.base
-                    , HA.style "font-size" "18px"
-                    , HA.style "font-family" fontText
-                    , HA.style "margin" "8px 0 0"
-                    , HA.style "padding" "12px 24px"
-                    , HA.style "box-shadow" ("0 0 8px rgb(" ++ props.theme.baseChannels ++ " / 0.3)")
-                    , HA.title ("" ++ colorName ++ " / border-radius")
+                    , HA.style "padding" "8px 12px"
                     ]
-                    [ H.span [ HA.title ("font-text / " ++ colorName ++ "-contrast") ] [ H.text props.label ]
-                    , shapes colorName props.theme.light props.theme.light
-                    ]
-                , H.p
-                    [ HA.style "padding-top" "12px"
-                    , HA.style "margin" "12px 0"
-                    , HA.style "padding" "16px 16px"
+                    [ H.text "Text" ]
+                , H.div
+                    [ HA.style "background" ("rgb( " ++ color.fgChannels ++ " / 0.1)")
                     , HA.style "border-radius" "4px"
-                    , HA.style "border-left" ("8px solid " ++ props.theme.light)
-                    , HA.style "background-color" ("rgb(" ++ props.theme.lightChannels ++ " / 0.1)")
-                    , HA.style "color" baseline.base
-                    , HA.style "font-size" "14px"
-                    , HA.title (props.label ++ " with 0.08 opacity / border-radius")
+                    , HA.style "color" color.fg
+                    , HA.style "padding" "8px 12px"
                     ]
-                    [ H.span [ HA.title ("font-text / " ++ colorName) ]
-                        [ H.text "Tinted backgrounds can be used to display information with semantic coloring." ]
-                    ]
-                ]
-
-        separator : H.Html msg
-        separator =
-            H.div
-                [ HA.style "display" "flex"
-                , HA.style "justify-content" "center"
-                , HA.style "margin" "20px 0"
-                , HA.style "padding" "8px 12px"
-                , HA.style "background" background.light
-                , HA.style "border-radius" "4px"
-                ]
-                [ H.div
-                    [ HA.style "border-radius" "50%"
-                    , HA.style "background" baseline.light
-                    , HA.style "width" "12px"
-                    , HA.style "height" "12px"
-                    ]
-                    []
+                    [ H.text "Text" ]
                 ]
     in
-    H.div
-        [ HA.style "position" "relative"
-        , HA.style "padding" "40px"
-        , HA.style "background-color" background.contrast
-        , HA.style "font-family" fontText
-        , HA.style "font-size" "16px"
-        , HA.title "background-light"
+    H.article
+        [ HA.style "padding" "20px"
+        , HA.style "background" ("linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), " ++ base.bg)
         ]
-        [ H.div
-            [ HA.style "position" "absolute"
-            , HA.style "top" "0"
-            , HA.style "left" "0"
-            , HA.style "right" "0"
-            , HA.style "bottom" "0"
-            ]
-            []
-        , H.div
-            [ HA.style "position" "relative"
-            , HA.style "z-index" "1"
-            , HA.style "padding" "40px"
-            , HA.style "border-radius" "8px"
-            , HA.style "background-color" background.base
+        [ H.section
+            [ HA.style "border-radius" "4px"
+            , HA.style "padding" "20px"
+            , HA.style "background" base.bg
             , HA.style "box-shadow" "0 0 8px rgba(0, 0, 0, 0.1)"
-            , HA.style "font-family" fontText
-            , HA.style "font-size" "16px"
-            , HA.title "background-base"
+            , HA.style "font-family" fonts.text
+            , HA.style "color" base.fg
             ]
             [ H.div
-                [ HA.style "display" "flex"
-                , HA.style "align-items" "baseline"
+                [ HA.style "display" "grid"
+                , HA.style "grid-template-columns" "repeat(2, minmax(0, 1fr))"
+                , HA.style "gap" "20px"
+                , HA.style "width" "100%"
                 ]
-                [ H.h1
-                    [ HA.style "font-family" fontTitle
-                    , HA.style "font-size" "40px"
-                    , HA.style "color" baseline.base
-                    , HA.style "margin" "0px"
-                    , HA.style "padding-bottom" "12px"
-                    , HA.title "font-title / baseline-light"
+                (H.div
+                    [ HA.style "grid-column" "span 1 / span 1"
+                    , HA.style "display" "flex"
+                    , HA.style "flex-direction" "column"
+                    , HA.style "gap" "8px"
                     ]
-                    [ H.text "Theme Sampler" ]
-                , H.div
-                    [ HA.style "flex-grow" "1"
-                    , HA.style "border-bottom" ("2px solid " ++ background.light)
+                    [ H.h1
+                        [ HA.style "font-family" fonts.title
+                        , HA.style "color" base.fg
+                        , HA.style "font-size" "20px"
+                        , HA.style "margin" "0"
+                        ]
+                        [ H.text "Theme Sample"
+                        ]
+                    , H.p
+                        [ HA.style "margin" "0" ]
+                        [ H.text "All theme colors and contrasts are displayed here." ]
+                    , H.p
+                        [ HA.style "margin" "0"
+                        , HA.style "font-size" "14px"
+                        , HA.style "color" base.aux
+                        , HA.style "font-family" fonts.code
+                        ]
+                        [ H.text "Use accessibility ratings for making sure your theme works for everyone." ]
                     ]
-                    []
-                ]
-            , H.p
-                [ HA.style "color" baseline.base
-                , HA.style "margin" "0"
-                , HA.title "font-text / baseline-base"
-                ]
-                [ H.text "This sampler is using "
-                , H.span
-                    [ HA.style "font-weight" "bold", HA.style "color" baseline.contrast ]
-                    [ H.text "all available color and styles" ]
-                , H.text " in your theme."
-                , H.span
-                    [ HA.style "color" baseline.light
-                    , HA.title "font-text / baseline-base"
-                    ]
-                    [ H.text " You can hover over any element to figure out it's base styles."
-                    ]
-                ]
-            , separator
-            , colorSample
-                { label = "Primary"
-                , theme = primary
-                }
-            , colorSample
-                { label = "Secondary"
-                , theme = secondary
-                }
-            , colorSample
-                { label = "Success"
-                , theme = success
-                }
-            , colorSample
-                { label = "Warning"
-                , theme = warning
-                }
-            , colorSample
-                { label = "Danger"
-                , theme = danger
-                }
+                    :: List.map colorSample colorVars
+                )
             ]
         ]
