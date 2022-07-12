@@ -69,7 +69,8 @@ toThemeProviderTheme data extra =
     , extra
     ]
         |> List.concat
-        |> ThemeProvider.fromList namespace
+        |> List.map (Tuple.mapFirst ((++) "tmspc-"))
+        |> ThemeProvider.fromList
 
 
 {-| -}
